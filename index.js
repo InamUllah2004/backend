@@ -203,6 +203,35 @@ app.put('/api/teams/:id/assign-sprint', async (req, res) => {
     res.status(500).json({ message: 'Failed to assign sprint' });
   }
 });
+// Create a new team
+app.post('/api/teams', async (req, res) => {
+  try {
+    const { teamLead, developers, assignedProjects = [], sprintAssignments = [] } = req.body;
+
+    const newTeam = new Team({
+      teamLead,
+      developers,
+      assignedProjects,
+      sprintAssignments
+    });
+
+    const savedTeam = await newTeam.save();
+
+    // Optionally populate related fields
+    const populatedTeam = await Team.findById(savedTeam._id)
+      .populate('teamLead')
+      .populate('developers')
+      .populate('assignedProjects')
+      .populate('sprintAssignments.projectId')
+      .populate('sprintAssignments.sprintId')
+      .populate('sprintAssignments.developerIds');
+
+    res.status(201).json(populatedTeam);
+  } catch (err) {
+    console.error('❌ Error creating team:', err);
+    res.status(500).json({ error: 'Failed to create team' });
+  }
+});
 
 
 
