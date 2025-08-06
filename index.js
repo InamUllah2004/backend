@@ -8,8 +8,6 @@ import Sprint from './models/sprint.js';
 import Project from './models/project.js';
 import Team from './models/team.js';
 import dotenv from 'dotenv';
-// Remove this line — you already imported CORS properly at the top:
-import cors from 'cors';
 
 dotenv.config();
 
