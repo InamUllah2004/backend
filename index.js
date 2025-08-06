@@ -8,10 +8,10 @@ import Sprint from './models/sprint.js';
 import Project from './models/project.js';
 import Team from './models/team.js';
 import dotenv from 'dotenv';
-
 dotenv.config();
 
 const app = express();
+
 
 // Middleware
 
