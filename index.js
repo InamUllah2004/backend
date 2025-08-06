@@ -18,7 +18,7 @@ const app = express();
 app.use(cors({
   origin: [
     'http://localhost:5173',
-    'https://689087542173b2000880b17d--splendorous-arithmetic-75f3ba.netlify.app'
+    'https://dreamy-starburst-5c6c0e.netlify.app/'
   ],
   credentials: true
 }));
