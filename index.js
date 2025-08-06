@@ -7,15 +7,37 @@ import bcrypt from 'bcrypt';
 import Sprint from './models/sprint.js';
 import Project from './models/project.js';
 import Team from './models/team.js';
+import dotenv from 'dotenv';
+// Remove this line — you already imported CORS properly at the top:
+import cors from 'cors';
+
+dotenv.config();
 
 const app = express();
-app.use(cors({ origin: 'http://localhost:5173' }));
+
+// Middleware
+
+app.use(cors({
+  origin: [
+    'http://localhost:5173',
+    'https://689087542173b2000880b17d--splendorous-arithmetic-75f3ba.netlify.app'
+  ],
+  credentials: true
+}));
+
+
 app.use(express.json());
 
-// MongoDB connection
-mongoose.connect('mongodb://localhost:27017/project_management')
-  .then(() => console.log('MongoDB connected!'))
-  .catch(err => console.error('MongoDB connection error:', err));
+// ✅ Direct MongoDB URI (for practice only)
+mongoose.connect(
+  process.env.MONGODB_URI,
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  }
+)
+.then(() => console.log('MongoDB connected'))
+.catch(err => console.error('MongoDB connection error:', err));
 
 // Logger middleware
 app.use((req, res, next) => {
